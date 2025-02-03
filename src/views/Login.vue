@@ -44,7 +44,10 @@ import { reactive,ref } from 'vue'
 import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { useStore } from 'vuex'
 import axios from 'axios'
+
+const store = useStore()
 
 const loginForm = reactive({
 	username:"",
@@ -77,6 +80,8 @@ const submitForm = () => {
 			axios.post("/adminapi/user/login",loginForm).then(res => {
 				console.log(res.data)
 				if(res.data.ActionType === "OK"){
+					// console.log(res.data.data)
+					store.commit("changeUserInfo",res.data.data)
 					router.push("/index")
 					//在axios拦截器中配置token（axios.config）
 					// localStorage.setItem("token", "2025");

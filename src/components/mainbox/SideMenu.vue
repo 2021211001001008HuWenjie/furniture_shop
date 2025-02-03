@@ -45,10 +45,10 @@
 </template>
 
 <script setup>
-	import { HomeFilled,Avatar,UserFilled,MessageBox,Reading,Pointer } from '@element-plus/icons-vue'
-	import { useRoute } from 'vue-router'
-	
-	const route = useRoute()
+import { HomeFilled,Avatar,UserFilled,MessageBox,Reading,Pointer } from '@element-plus/icons-vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 </script>
 
 <style lang="scss" scoped>
