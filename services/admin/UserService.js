@@ -6,6 +6,14 @@ const UserService = {
             username,
             password
             })
+    },
+
+    upload:async ({id,username,introduction,gender,avatar}) => {
+        return UserModel.update({
+            id
+        },{
+            username,introduction,gender,avatar
+        })
     }
 }
 

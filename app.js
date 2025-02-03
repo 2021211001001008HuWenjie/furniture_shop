@@ -47,7 +47,7 @@ app.use((req,res,next) => {
     if(payload){
       // 每一次请求,重新生成新的token
       const newToken = JWT.generate({
-        _id: payload._id,
+        id: payload.id,
         username: payload.username
       }, "1d"); // 生成新的 Token
       console.log(newToken)
