@@ -26,5 +26,6 @@ userRouter.get("/adminapi/user/home",(req,res) => {
     res.send({ok:1})
 })
 userRouter.post("/adminapi/user/upload",upload.single('file'),UserController.upload)
+userRouter.post("/adminapi/user/add",upload.single('file'),UserController.add)
 
 module.exports = userRouter;
