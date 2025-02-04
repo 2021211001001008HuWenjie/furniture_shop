@@ -13,5 +13,9 @@
 	import SideMenu from '../components/mainbox/SideMenu.vue'
 
 </script>
-<style>
+<style lang="scss" scoped>
+	.el-main{
+		overflow: auto;
+
+	}
 </style>
