@@ -30,7 +30,22 @@ const UserService = {
         })
     },
 
-    
+    //注意不返回用户密码password字段，提高安全性
+    getList:async ({id}) => {
+        return id
+            ?UserModel.find({id:id},["id","username","role","password","introduction"])
+            :UserModel.find({},["id","username","role","gender","introduction","avatar"])
+    },
+
+    delList:async (id) => {
+        return UserModel.delete(id)
+    },
+
+    putList:async (body) => {
+        return UserModel.update({id:body.id},body)
+    }
+
+
 }
 
 module.exports = UserService

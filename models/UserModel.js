@@ -34,10 +34,15 @@ const UserModel = {
      * 查询用户
      * @param {Object} conditions - 查询条件
      * @returns {Promise} - 返回查询结果
+     * @fields 参数，你可以动态选择需要查询的字段
+     * orderBy = '' 排序
+     * limit = 0, offset = 0 分页
      */
-    find(conditions = {}) {
+    find(conditions = {}, fields = [], orderBy = '', limit = 0, offset = 0) {
         return new Promise((resolve, reject) => {
-            let sql = 'SELECT * FROM users';
+            const selectedFields = fields.length > 0 ? fields.join(', ') : '*';
+            let sql = `SELECT ${selectedFields} FROM users`;
+
             const params = [];
             if (Object.keys(conditions).length > 0) {
                 const whereClause = Object.keys(conditions)
@@ -46,6 +51,21 @@ const UserModel = {
                 sql += ` WHERE ${whereClause}`;
                 Object.values(conditions).forEach((value) => params.push(value));
             }
+
+            if (orderBy) {
+                sql += ` ORDER BY ${orderBy}`;
+            }
+
+            if (limit > 0) {
+                sql += ` LIMIT ?`;
+                params.push(limit);
+            }
+
+            if (offset > 0) {
+                sql += ` OFFSET ?`;
+                params.push(offset);
+            }
+
             pool.query(sql, params, (err, results) => {
                 if (err) return reject(err);
                 resolve(results);
@@ -93,7 +113,9 @@ const UserModel = {
                 resolve(result);
             });
         });
-    }
+    },
+
+
 };
 
 // 导出用户模型

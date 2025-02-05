@@ -27,5 +27,11 @@ userRouter.get("/adminapi/user/home",(req,res) => {
 })
 userRouter.post("/adminapi/user/upload",upload.single('file'),UserController.upload)
 userRouter.post("/adminapi/user/add",upload.single('file'),UserController.add)
+// 实现用户列表的增删改查
+userRouter.get("/adminapi/user/list",UserController.getList)
+userRouter.get("/adminapi/user/list/:id",UserController.getList)
+userRouter.put("/adminapi/user/list/:id",UserController.putList)
+userRouter.delete("/adminapi/user/list/:id",UserController.delList)
+
 
 module.exports = userRouter;
