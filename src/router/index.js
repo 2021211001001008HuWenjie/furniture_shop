@@ -46,6 +46,12 @@ router.beforeEach((to,from,next) => {
 		}else{
 			//isGetterRouter为假时，配置router
 			if(!store.state.isGetterRouter){
+				
+				//删除所有的嵌套路由
+				//mainbox
+				router.removeRoute("mainbox")
+				
+				
 				ConfigRouter()
 				next({
 					path:to.fullPath
@@ -57,14 +63,33 @@ router.beforeEach((to,from,next) => {
 	}
 })
 
+//checkPermission(item)为true再将这个添加进routes
 const ConfigRouter = ()=>{
+	
+	if(!router.hasRoute("mainbox")){
+		router.addRoute({
+			path:'/mainBox',
+			name:'MainBox',
+			component:MainBox
+			//MainBox嵌套路由，后面根据权限动态添加
+		})
+	}
+	
 	RoutesConfig.forEach(item => {
-		router.addRoute("MainBox",item)
+		checkPermission(item) && router.addRoute("MainBox",item)
 	})
 	//改变isGetterRouter = true
 	store.commit("changeGetterRouter",true)
 }
 
-
+//如果item当中有requireAdmin进行判断
+//role === 1返回true（amdin可以操作）
+//否则为false
+const checkPermission = (item) => {
+	if(item.requireAdmin){
+		return store.state.userInfo.role === 1
+	}
+	return true
+}
 
 export default router

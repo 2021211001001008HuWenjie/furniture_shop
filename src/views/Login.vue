@@ -82,6 +82,7 @@ const submitForm = () => {
 				if(res.data.ActionType === "OK"){
 					// console.log(res.data.data)
 					store.commit("changeUserInfo",res.data.data)
+					store.commit("changeGetterRouter",false)
 					router.push("/index")
 					//在axios拦截器中配置token（axios.config）
 					// localStorage.setItem("token", "2025");

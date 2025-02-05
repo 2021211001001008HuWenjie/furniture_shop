@@ -13,7 +13,8 @@
 			  <span>个人中心</span>
 			</el-menu-item>
 			
-			<el-sub-menu index="/user-manage">
+<!-- 		v-admin封装需要admin权限才可以使用的功能权限设置，增强复用性 -->
+			<el-sub-menu index="/user-manage" v-admin>
 			  <template #title>
 				<el-icon><UserFilled /></el-icon>
 				<span>用户管理</span>
@@ -47,8 +48,22 @@
 <script setup>
 import { HomeFilled,Avatar,UserFilled,MessageBox,Reading,Pointer } from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 const route = useRoute()
+
+const store = useStore()
+
+//用户权限控制，自定指令显示上移除功能
+//但该操作并没有禁止访问路由  
+const vAdmin = {
+	mounted(el){
+		console.log(el)
+		if(store.state.userInfo.role !== 1){
+			el.parentNode.removeChild(el)
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>
