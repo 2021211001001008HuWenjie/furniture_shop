@@ -11,13 +11,17 @@
     "@tsparticles/slim": "^3.8.1",
     "@tsparticles/vue3": "^3.0.1",
     "@vue/cli": "^5.0.8",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.7.9",
     "element-plus": "^2.9.3",
+    "moment": "^2.30.1",
     "tsparticles-slim": "^2.12.0",
     "vue": "^3.2.8",
     "vue-router": "^4.5.0",
     "vuex": "^4.1.0",
-    "vuex-persistedstate": "^4.1.0"
+    "vuex-persistedstate": "^4.1.0",
+    "wangeditor": "^4.7.15"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.0",
