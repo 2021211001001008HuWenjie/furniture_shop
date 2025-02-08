@@ -21,6 +21,7 @@ const upload = multer({ dest: uploadDir });
 //涉及文件上传，普通post不行，需要上传multer中间件
 ProductRouter.post("/adminapi/product/add",upload.single("file"),ProductController.add)
 ProductRouter.get("/adminapi/product/list",ProductController.getList)
+ProductRouter.post("/adminapi/product/list",upload.single("file"),ProductController.updateList)// 编辑产品(编辑)
 ProductRouter.get("/adminapi/product/list/:id",ProductController.getList)
 ProductRouter.get("/adminapi/product/list/:id/image",ProductController.getImage)
 ProductRouter.delete("/adminapi/product/list/:id",ProductController.delList)

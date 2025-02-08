@@ -7,19 +7,19 @@ const ProductService = {
         })
     },
 
-    // //验证cover是否被更改。若更改就全部更新，否则不更新cover字段
-    // updateList:async ({id,title,content,category,cover,isPublish,editTime}) => {
-    //     if(cover){
-    //         return NewsModel.update({id},{
-    //             title,content,category,cover,isPublish,editTime
-    //         })
-    //     }else {
-    //         return NewsModel.update({id},{
-    //             title,content,category,isPublish,editTime
-    //         })
-    //     }
-    //
-    // },
+    //验证cover是否被更改。若更改就全部更新，否则不更新cover字段
+    updateList:async ({id,name,price,info,introduction,state,stock_num,store,category_id,tags,img,editTime}) => {
+        if(img){
+            return ProductModel.update({id},{
+                name,price,info,introduction,state,stock_num,store,category_id,tags,img,editTime
+            })
+        }else {
+            return ProductModel.update({id},{
+                name,price,info,introduction,state,stock_num,store,category_id,tags,editTime
+            })
+        }
+
+    },
     //
     // 商品列表获取
     getList:async ({id})=>{

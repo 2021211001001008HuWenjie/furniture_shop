@@ -6,8 +6,8 @@ const ProductController = {
         console.log(req.file,req.body)
         //调用service进行添加
 
-        const cover = req.file?`/product_cover_uploads/${req.file.filename}`:""
-        const { name,price,info,introduction,state,stock_num,store,category_id,tags,img } = req.body
+        const img = req.file?`/products_cover_uploads/${req.file.filename}`:""
+        const { name,price,info,introduction,state,stock_num,store,category_id,tags } = req.body
         await ProductService.add({
             name,
             price,
@@ -26,22 +26,28 @@ const ProductController = {
         })
     },
 
-    // updateList:async (req,res) => {
-    //     const cover = req.file?`/news_cover_uploads/${req.file.filename}`:""
-    //     const { title,content,category,isPublish,id } = req.body
-    //     await NewsService.updateList({
-    //         id,
-    //         title,
-    //         content,
-    //         cover,
-    //         category:Number(category),
-    //         isPublish:Number(isPublish),
-    //         editTime:new Date()
-    //     })
-    //     res.send({
-    //         ActionType:"OK"
-    //     })
-    // },
+
+    updateList:async (req,res) => {
+        const img = req.file?`/products_cover_uploads/${req.file.filename}`:""
+        const { id,name,price,info,introduction,state,stock_num,store,category_id,tags } = req.body
+        await ProductService.updateList({
+            id,
+            name,
+            price,
+            info,
+            introduction,
+            state,
+            stock_num,
+            store,
+            tags,
+            img,
+            category_id:Number(category_id),
+            editTime:new Date()
+        })
+        res.send({
+            ActionType:"OK"
+        })
+    },
 
     getList:async (req,res) => {
         const result = await ProductService.getList({id:req.params.id})
