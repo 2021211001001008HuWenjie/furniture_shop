@@ -6,13 +6,29 @@
 			<el-table :data="tableData" style="width: 100%">
 				<el-table-column prop="name" label="产品名称" width="auto" />
 				
-				    <el-table-column label="产品图片" prop="img">
-				      <template #default="scope">
-<!-- 						  :src='{{scope.row.img}}' -->
-						  <div>
-							  <el-image style="width: 100px; height: 100px"  :src="blobUrl"/>
-						  </div>
-				      </template>
+				    <el-table-column label="产品图片" prop="img" width="auto">
+					  
+					  <template #default="scope">
+					  	<div v-if = "scope.row.img" class="demo-image__preview">
+							<el-image
+							  ref="imageRef"
+							  style="width: 100px; height: 100px"
+							  :src="'http://localhost:3000' + scope.row.img"
+							  :preview-src-list="srcList"
+							  :initial-index="getIndex('http://localhost:3000' + scope.row.img)"
+							  fit="cover"
+							/>
+					  	</div>
+					  	<div v-else>
+						  <el-image>
+							<template #error>
+							  <div class="image-slot">
+								<el-icon><icon-picture /></el-icon>
+							  </div>
+							</template>
+						  </el-image>
+					  	</div>
+					  </template>
 				    </el-table-column>
 			
 				
@@ -41,7 +57,7 @@
 					</template>
 				</el-table-column>
 				
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="auto">
                     <template #default="scope">
                       
                         <el-button
@@ -77,10 +93,12 @@ import { ref,onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import formatTime from '@/util/formatTime'
-import { Star,View,Edit,Delete,StarFilled } from '@element-plus/icons-vue'
+import { Star,View,Edit,Delete,StarFilled,Picture as IconPicture } from '@element-plus/icons-vue'
 
 const tableData = ref([])
 const router = useRouter()
+const srcList = ref([]);
+
 
 onMounted(() => {
 	getTableData()
@@ -92,32 +110,35 @@ const getTableData = async () => {
 	const res = await axios.get(`/adminapi/product/list`)
 	// console.log(res.data.data)
 	tableData.value = res.data.data
-	console.log(tableData)
+	getUrl(res.data.data)
 }
 
-const fetchImage = async () => {
-  try {
-    const response = await fetch('/api/get-image'); // 替换为你的 API 地址
-    const blob = await response.blob();
-    imageUrl.value = URL.createObjectURL(blob); // 将 Blob 转换为 URL
-  } catch (error) {
-    console.error('获取图片失败:', error);
-  }
+// const srcList = [
+// "http://localhost:3000/products_cover_uploads/866c0edd8315d6121f645fc2d4681cdd",
+// "http://localhost:3000/products_cover_uploads/e9ee6cf5130d303f7cd9baddfbae711a"]
+
+
+const getUrl = async (products) => {
+	// 创建一个空数组来存储图片的 URL
+	// const srcList = [];
+
+	// 遍历每个产品，提取图片 URL 并添加到 srcList 中
+	products.forEach(product => {
+		// 假设每个产品对象中有一个 imageUrl 字段存储图片的 URL
+        // 检查 imageUrl 是否存在且不为空
+        if (product.img && product.img.trim() !== '') {
+            srcList.value.push('http://localhost:3000' + product.img);
+        }
+	});
+
+	// 现在 srcList 包含了所有产品的图片 URL
+	console.log(srcList);
+}
+
+// 获取图片索引（用于预览时定位）
+const getIndex = (imageUrl) => {
+  return srcList.value.indexOf(imageUrl);
 };
-
-
-//开关回调函数
-// const handleSwitchChange = async (item) => {
-// 	await axios.put(`/adminapi/news/publish`,{id:item.id,isPublish:item.isPublish})
-	
-// 	await getTableData()
-// }
-
-//预览回调函数
-// const handlePriview = async (data) => {
-// 	dialogVisible.value = true
-// 	priviewData.value = data
-// }
 
 //删除回调函数 
 const handleDelete = async (item) => {
@@ -151,5 +172,15 @@ const handleEdit = async (item) => {
 	img{
 		max-width: 100%;
 	}
+}
+.demo-image__error .image-slot {
+  font-size: 30px;
+}
+.demo-image__error .image-slot .el-icon {
+  font-size: 30px;
+}
+.demo-image__error .el-image {
+  width: 100%;
+  height: 200px;
 }
 </style>

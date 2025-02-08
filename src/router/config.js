@@ -6,7 +6,7 @@ import NewsAdd from "../views/news-manage/NewsAdd.vue"
 import NewsList from "../views/news-manage/NewsList.vue"
 import NewsEdit from "../views/news-manage/NewsEdit.vue"
 import ProductAdd from "../views/product-manage/ProductAdd.vue"
-import ProductList from "../views/product-manage/ProductList.vue"
+import ProductList from '../views/product-manage/ProductList.vue'// 产品列表
 import ProductEdit from "../views/product-manage/ProductEdit.vue"
 import NotFound from "../views/notfound/NotFound.vue"
 
@@ -47,14 +47,14 @@ const routes = [
 		path:"/product-manage/addproduct",
 		component:ProductAdd
 	},
-	{
-		path:"/product-manage/productlist",
-		component:ProductList
-	},
-	{
-		path:"/product-manage/editproduct/:id",
-		component:ProductEdit
-	},
+    {
+        path:"/product-manage/productlist",
+        component:ProductList
+    },
+    {
+        path:"/product-manage/editproduct/:id",
+        component:ProductEdit
+    },
 	{
 		path:"/",
 		redirect:"/index"

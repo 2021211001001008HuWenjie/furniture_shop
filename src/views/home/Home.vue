@@ -29,9 +29,17 @@
 				</el-carousel-item>
 			</el-carousel> -->
 		  <!-- 走马灯ver2 -->
-			<el-carousel indicator-position="outside">
-		      <el-carousel-item v-for="item in 4" :key="item">
-		        <h3 text="2xl" justify="center">{{ item }}</h3>
+			<el-carousel v-if="loopList.length" indicator-position="outside" :interval="4000">
+		      <el-carousel-item v-for="item in loopList" :key="item.id">
+				  <div :style="{
+					  backgroundImage:`url(http://localhost:3000/${item.img})`,
+					  backgroundSize:'img'
+					  }">
+						<h3 justify="center" text="2xl">
+							{{ item.name  }}
+						</h3>
+				  </div>
+		       
 		      </el-carousel-item>
 		    </el-carousel>
 		</el-card>
@@ -42,8 +50,22 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { computed,onMounted,ref } from 'vue'
 import axios from 'axios'
+
+onMounted(() => {
+	getData()
+	
+})
+
+const loopList = ref([])
+
+const getData = async () => {
+	const res = await axios.get(`/adminapi/product/list`)
+	// console.log(res.data.data)
+	loopList.value = res.data.data
+	console.log(loopList.value)
+}
 
 axios.get("/adminapi/user/home").then(res => {
 	console.log(res.data)
@@ -74,6 +96,7 @@ const welcomeText = computed(() => new Date().getHours() < 20?'要开心每一�
 	  opacity: 0.75;
 	  line-height: 300px;
 	  margin: 0;
+	  text-align: center;
 	}
 	
 	.el-carousel__item:nth-child(2n) {
@@ -85,7 +108,7 @@ const welcomeText = computed(() => new Date().getHours() < 20?'要开心每一�
 	}
 	// 走马灯ver1
 	// .el-carousel__item h3 {
-	//   color: #475669;
+	//   color: white;
 	//   opacity: 0.75;
 	//   line-height: 200px;
 	//   margin: 0;

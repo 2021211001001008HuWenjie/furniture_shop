@@ -65,7 +65,7 @@
 			      </el-select>
 			</el-form-item>
 			
-			<el-form-item label="产品标签" prop="tags">
+<!-- 			<el-form-item label="产品标签" prop="tags">
 				    <el-select
 				      v-model="productForm.tags"
 				      multiple
@@ -79,7 +79,7 @@
 				        :value="item.value"
 				      />
 				    </el-select>
-			</el-form-item>
+			</el-form-item> -->
 			
 			<el-form-item label="产品简要简介" prop="info">
 			  <el-input v-model="productForm.info" type="textarea"/>

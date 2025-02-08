@@ -124,7 +124,7 @@ const handleSwitchChange = async (item) => {
 }
 
 //预览回调函数
-const handlePriview = async (data) => {
+const handlePreview = async (data) => {
 	dialogVisible.value = true
 	priviewData.value = data
 }
